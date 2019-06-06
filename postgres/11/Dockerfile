@@ -1,7 +1,7 @@
 FROM postgres:11
 
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y curl ca-certificates make build-essential git-core autoconf automake libtool pkg-config && \
+    apt-get install --no-install-recommends -y curl ca-certificates make build-essential git-core autoconf automake libtool pkg-config libcurl4-gnutls-dev zlib1g-dev && \
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     apt-get update && \
@@ -16,6 +16,9 @@ RUN apt-get update && \
     make -j4 && make install && ldconfig && \
     git clone https://github.com/pramsey/pgsql-postal.git /usr/local/src/pgsql-postal && \
     cd /usr/local/src/pgsql-postal && \
-    make && make install && \
+    make -j4 && make install && \
+    git clone --branch develop https://github.com/zombodb/zombodb.git /usr/local/src/zombodb && \
+    cd /usr/local/src/zombodb && \
+    make -j4 && make install && \
     apt-get purge -y postgresql-server-dev-11 make build-essential git-core autoconf automake libtool pkg-config && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*

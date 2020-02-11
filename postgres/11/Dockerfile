@@ -54,7 +54,7 @@ RUN set -eux \
 	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 RUN set -eux \
-    && install_packages postgresql-common libpq5 libxml2
+    && install_packages postgresql-common libpq5 libxml2 libedit2
 
 RUN set -eux \
     && mkdir /docker-entrypoint-initdb.d \
@@ -71,6 +71,7 @@ COPY --from=build_stage /usr/share/postgresql /usr/share/postgresql
 COPY --from=build_stage /usr/local/bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 COPY --from=build_stage /usr/local/bin/libpostal_data /usr/local/bin/libpostal_data
 COPY --from=build_stage /usr/local/lib/libpostal.so.1 /usr/local/lib/libpostal.so.1
+COPY --from=build_stage /usr/lib/x86_64-linux-gnu/libpq.* /usr/lib/x86_64-linux-gnu/
 
 FROM scratch
 

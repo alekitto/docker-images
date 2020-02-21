@@ -1,7 +1,7 @@
 FROM bitnami/minideb:stretch as build_stage
 
 RUN install_packages ca-certificates
-COPY ["certs/root_ca.crt", "/etc/ssl/Latenightdev Local Development CA.pem"]
+COPY ["certs/root_ca.crt", "/etc/ssl/certs/Latenightdev Local Development CA.pem"]
 
 FROM busybox:latest as intermediate_stage
 
@@ -12,4 +12,4 @@ FROM scratch
 COPY --from=intermediate_stage / /
 VOLUME /etc/ssl/
 
-CMD [ '/bin/sh' ]
+CMD [ '/bin/true' ]

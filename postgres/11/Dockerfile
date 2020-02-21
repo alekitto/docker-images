@@ -54,16 +54,11 @@ RUN set -eux \
 	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 RUN set -eux \
-    && install_packages postgresql-common libpq5 libxml2 libedit2
+    && install_packages postgresql-common libpq5 libxml2 libedit2 libnghttp2-14 libcurl3-gnutls
 
 RUN set -eux \
     && mkdir /docker-entrypoint-initdb.d \
     && touch /docker-entrypoint-initdb.d/.exists
-
-ENV PG_MAJOR 11
-ENV PG_VERSION 11.6-1.pgdg90+1
-ENV PATH $PATH:/usr/lib/postgresql/$PG_MAJOR/bin
-ENV PGDATA /var/lib/postgresql/data
 
 COPY --from=build_stage /usr/lib/postgresql /usr/lib/postgresql
 COPY --from=build_stage /etc/apt /etc/apt
@@ -71,7 +66,6 @@ COPY --from=build_stage /usr/share/postgresql /usr/share/postgresql
 COPY --from=build_stage /usr/local/bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 COPY --from=build_stage /usr/local/bin/libpostal_data /usr/local/bin/libpostal_data
 COPY --from=build_stage /usr/local/lib/libpostal.so.1 /usr/local/lib/libpostal.so.1
-COPY --from=build_stage /usr/lib/x86_64-linux-gnu/libcurl-gnutls.so* /usr/lib/x86_64-linux-gnu/
 COPY --from=build_stage /usr/lib/x86_64-linux-gnu/libpq.* /usr/lib/x86_64-linux-gnu/
 
 FROM scratch

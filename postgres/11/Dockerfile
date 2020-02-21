@@ -71,6 +71,7 @@ COPY --from=build_stage /usr/share/postgresql /usr/share/postgresql
 COPY --from=build_stage /usr/local/bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 COPY --from=build_stage /usr/local/bin/libpostal_data /usr/local/bin/libpostal_data
 COPY --from=build_stage /usr/local/lib/libpostal.so.1 /usr/local/lib/libpostal.so.1
+COPY --from=build_stage /usr/lib/x86_64-linux-gnu/libcurl-gnutls.so* /usr/lib/x86_64-linux-gnu/
 COPY --from=build_stage /usr/lib/x86_64-linux-gnu/libpq.* /usr/lib/x86_64-linux-gnu/
 
 FROM scratch

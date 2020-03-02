@@ -21,7 +21,7 @@ RUN git clone https://github.com/gavinwahl/postgres-json-schema.git /usr/local/s
     cd /usr/local/src/postgres-json-schema && \
     make install
 
-FROM bitnami/minideb:stretch as intermidiate_stage
+FROM bitnami/minideb:buster as intermidiate_stage
 
 # explicitly set user/group IDs
 RUN set -eux; \
@@ -67,6 +67,7 @@ COPY --from=build_stage /usr/local/bin/docker-entrypoint.sh /usr/local/bin/docke
 COPY --from=build_stage /usr/local/bin/libpostal_data /usr/local/bin/libpostal_data
 COPY --from=build_stage /usr/local/lib/libpostal.so.1 /usr/local/lib/libpostal.so.1
 COPY --from=build_stage /usr/lib/x86_64-linux-gnu/libpq.* /usr/lib/x86_64-linux-gnu/
+COPY --from=build_stage /usr/lib/postgresql/11/lib/plpython3.so /usr/lib/postgresql/11/lib/plpython3.so
 
 FROM scratch
 

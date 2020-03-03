@@ -21,7 +21,7 @@ RUN git clone https://github.com/gavinwahl/postgres-json-schema.git /usr/local/s
     cd /usr/local/src/postgres-json-schema && \
     make install
 
-FROM bitnami/minideb:buster as intermidiate_stage
+FROM bitnami/minideb:stretch as intermidiate_stage
 
 # explicitly set user/group IDs
 RUN set -eux; \
@@ -54,7 +54,8 @@ RUN set -eux \
 	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 RUN set -eux \
-    && install_packages postgresql-common libpq5 libxml2 libedit2 libnghttp2-14 libcurl3-gnutls
+    && install_packages postgresql-common libpq5 libxml2 libedit2 libnghttp2-14 \
+       libcurl3-gnutls libicu57
 
 RUN set -eux \
     && mkdir /docker-entrypoint-initdb.d \

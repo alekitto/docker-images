@@ -55,7 +55,7 @@ RUN set -eux \
 
 RUN set -eux \
     && install_packages postgresql-common libpq5 libxml2 libedit2 libnghttp2-14 \
-       libcurl3-gnutls libicu57
+       libcurl3-gnutls libicu57 libpython3.5
 
 RUN set -eux \
     && mkdir /docker-entrypoint-initdb.d \

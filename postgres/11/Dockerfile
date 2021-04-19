@@ -73,7 +73,7 @@ COPY --from=build_stage /usr/lib/postgresql/11/lib/plpython3.so /usr/lib/postgre
 FROM scratch
 
 ENV PG_MAJOR=11 PG_VERSION=11.6-1.pgdg90+1 PATH=$PATH:/usr/lib/postgresql/11/bin \
-    PGDATA=/var/lib/postgresql/data
+    PGDATA=/var/lib/postgresql/data LD_LIBRARY_PATH=/usr/local/lib
 
 COPY --from=intermidiate_stage / /
 RUN mkdir -p /var/run/postgresql && chown -R postgres:postgres /var/run/postgresql && chmod 2777 /var/run/postgresql \
